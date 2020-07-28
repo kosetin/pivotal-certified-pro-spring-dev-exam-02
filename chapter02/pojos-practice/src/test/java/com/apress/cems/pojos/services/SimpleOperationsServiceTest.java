@@ -46,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @since 1.0
  */
 // comment the @Disabled annotation to run the test
-@Disabled
+//@Disabled
 public class SimpleOperationsServiceTest extends SimpleServiceTestBase {
     static final Long DETECTIVE_ID = 1L;
     static final String BADGE_NO = "NY112233";
@@ -98,7 +98,6 @@ public class SimpleOperationsServiceTest extends SimpleServiceTestBase {
 
         assertNotNull(criminalCase);
         assertNotNull(criminalCase.getLeadInvestigator());
-
     }
 
 }

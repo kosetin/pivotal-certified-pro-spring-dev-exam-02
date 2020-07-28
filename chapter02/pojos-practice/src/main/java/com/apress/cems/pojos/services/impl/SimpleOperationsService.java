@@ -42,6 +42,8 @@ import org.apache.commons.lang3.NotImplementedException;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * @author Iuliana Cosmina
@@ -62,17 +64,28 @@ public class SimpleOperationsService implements OperationsService {
     public CriminalCase createCriminalCase(CaseType caseType, String shortDescription, String badgeNo, Map<Evidence, String> evidenceMap) {
         // get detective
         // TODO 1. retrieve detective  (according to diagram 2.5)
+        Optional<Detective> detective = detectiveRepo.findByBadgeNumber(badgeNo);
 
         // create a criminal case instance
         CriminalCase criminalCase = new CriminalCase();
+
         // TODO 2. set fields; use ifPresent(..) to set(or not) the leadDetective field
+        criminalCase.setDetailedDescription(shortDescription);
+        criminalCase.setType(caseType);
+        detective.ifPresent(criminalCase::setLeadInvestigator);
 
         evidenceMap.forEach((ev, storageName) -> {
             // TODO 3. retrieve storage, throw ServiceException if not found
+            Storage storage = storageRepo.findByName(storageName)
+                    .orElseThrow(() -> new ServiceException("Storage not found for evidence: " + ev.getItemName()));
+
             // TODO 4. if storage is found, link it to the evidence and add evidence to the case
+            storage.addEvidence(ev);
+            criminalCase.addEvidence(ev);
         });
 
         // TODO 5. save the criminal case instance
+        criminalCaseRepo.save(criminalCase);
         return criminalCase;
     }
 
