@@ -70,7 +70,7 @@ public class SimpleOperationsService implements OperationsService {
         CriminalCase criminalCase = new CriminalCase();
 
         // TODO 2. set fields; use ifPresent(..) to set(or not) the leadDetective field
-        criminalCase.setDetailedDescription(shortDescription);
+        criminalCase.setShortDescription(shortDescription);
         criminalCase.setType(caseType);
         detective.ifPresent(criminalCase::setLeadInvestigator);
 

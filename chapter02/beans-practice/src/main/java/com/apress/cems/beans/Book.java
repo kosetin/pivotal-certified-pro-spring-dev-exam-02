@@ -27,17 +27,23 @@ SOFTWARE.
 */
 package com.apress.cems.beans;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 /**
  * @author Iuliana Cosmina
  * @since 1.0
  */
-// TODO 6. Add  a bean definition
+@Component
 public class Book implements Item {
 
-    private String title;
+    private final String title;
 
-    // TODO 7. Add a constructor  that sets the value for the title property
-    // and declare a value to be injected
+    @Autowired
+    public Book(@Value("${book.name}") String title) {
+        this.title = title;
+    }
 
     @Override
     public String getTitle() {

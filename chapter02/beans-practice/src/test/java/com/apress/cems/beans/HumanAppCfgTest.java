@@ -32,6 +32,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -39,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @since 1.0
  */
 // Comment the @Disabled annotation to run your test
-@Disabled
+//@Disabled
 class HumanAppCfgTest {
 
     @Test
@@ -51,6 +53,7 @@ class HumanAppCfgTest {
         assertNotNull(humanBean);
         assertNotNull(humanBean.getItem());
         assertNotNull(humanBean.getItem().getTitle());
+        assertEquals(humanBean.getItem().getTitle(), "Eugen Onegin");
 
         ctx.close();
     }
