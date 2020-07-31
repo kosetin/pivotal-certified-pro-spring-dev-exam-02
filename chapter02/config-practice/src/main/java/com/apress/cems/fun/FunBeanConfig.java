@@ -27,6 +27,8 @@ SOFTWARE.
 */
 package com.apress.cems.fun;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -39,7 +41,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = {"com.apress.cems.fun"} )
 class FunBeanConfig {
 
-    // TODO 13. Add the proper annotation to specify an initialization method and a destroy method
+    @Bean(initMethod = "initMethod", destroyMethod = "destroyMethod")
     FunBean funBean(){
         return new FunBean();
     }
