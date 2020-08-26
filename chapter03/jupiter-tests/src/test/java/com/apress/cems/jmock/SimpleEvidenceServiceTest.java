@@ -27,8 +27,6 @@ SOFTWARE.
 */
 package com.apress.cems.jmock;
 
-import com.apress.cems.dao.CriminalCase;
-import com.apress.cems.dao.Detective;
 import com.apress.cems.dao.Evidence;
 import com.apress.cems.repos.EvidenceRepo;
 import com.apress.cems.services.impl.SimpleEvidenceService;
@@ -38,7 +36,6 @@ import com.apress.cems.util.Rank;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.junit5.JUnit5Mockery;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

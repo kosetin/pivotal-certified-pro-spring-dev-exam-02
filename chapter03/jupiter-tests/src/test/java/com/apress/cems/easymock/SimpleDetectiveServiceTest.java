@@ -27,20 +27,18 @@ SOFTWARE.
 */
 package com.apress.cems.easymock;
 
-import com.apress.cems.dao.Detective;
 import com.apress.cems.repos.DetectiveRepo;
 import com.apress.cems.services.impl.SimpleDetectiveService;
 import com.apress.cems.util.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import java.util.Optional;
 
 import static com.apress.cems.stub.util.TestObjectsBuilder.buildDetective;
 import static org.easymock.EasyMock.*;
-import static org.easymock.EasyMock.verify;
 import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * @author Iuliana Cosmina
  * @since 1.0

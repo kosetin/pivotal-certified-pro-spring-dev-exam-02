@@ -56,7 +56,7 @@ import static org.junit.jupiter.api.Assertions.*;
 )
 @SpringJUnitConfig(classes = RepositoryTest6.TestCtxConfig.class)
 class RepositoryTest6 {
-    static final Long PERSON_ID = 1L;
+    static final Long PERSON_ID = 10L;
 
     @Autowired
     PersonRepo personRepo;

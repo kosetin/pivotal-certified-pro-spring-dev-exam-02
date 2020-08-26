@@ -29,6 +29,7 @@ package com.apress.cems.config;
 
 import com.apress.cems.pojos.repos.DetectiveRepo;
 import com.apress.cems.repos.JdbcDetectiveRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -43,29 +44,14 @@ import javax.sql.DataSource;
 // TODO 10. Split this configuration class in more configuration classes
 @Configuration
 @ComponentScan(basePackages =  {"com.apress.cems.repos"})
-@PropertySource("classpath:db/datasource.properties")
+@Import(TestDataSourceConfig.class)
 public class FullConfig {
-    @Value("${db.driverClassName}")
-    private String driverClassName;
-    @Value("${db.url}")
-    private String url;
-    @Value("${db.username}")
-    private String username;
-    @Value("${db.password}")
-    private String password;
 
-    @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource ds = new DriverManagerDataSource();
-        ds.setDriverClassName(driverClassName);
-        ds.setUrl(url);
-        ds.setUsername(username);
-        ds.setPassword(password);
-        return ds;
-    }
+    @Autowired
+    DataSource dataSource;
 
     @Bean
     DetectiveRepo detectiveRepo(){
-        return new JdbcDetectiveRepo(dataSource());
+        return new JdbcDetectiveRepo(dataSource);
     }
 }

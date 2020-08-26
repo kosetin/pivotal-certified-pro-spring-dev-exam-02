@@ -54,7 +54,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @since 1.0
  */
 @Sql(
-        scripts = "classpath:db/test-data.sql",
+        scripts = {"classpath:db/test-data-one.sql", "classpath:db/test-data-two.sql"},
         config = @SqlConfig(commentPrefix = "`", separator = "@@")
 )
 @Sql(statements = "DELETE FROM PERSON", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)

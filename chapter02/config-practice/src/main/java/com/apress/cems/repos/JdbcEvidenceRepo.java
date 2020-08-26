@@ -45,6 +45,7 @@ import java.util.Set;
 public class JdbcEvidenceRepo extends JdbcAbstractRepo<Evidence> implements EvidenceRepo {
 
     public JdbcEvidenceRepo(){
+        System.out.println("CREATE EVIDENCE REPO DEFAULT CONSTRUCTOR");
     }
 
     @Autowired

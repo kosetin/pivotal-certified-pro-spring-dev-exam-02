@@ -27,7 +27,6 @@ SOFTWARE.
 */
 package com.apress.cems.stub.services;
 
-import com.apress.cems.dao.CriminalCase;
 import com.apress.cems.dao.Detective;
 import com.apress.cems.repos.NotFoundException;
 import com.apress.cems.services.impl.SimpleCriminalCaseService;
@@ -36,8 +35,6 @@ import com.apress.cems.util.Rank;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Set;
 
 import static com.apress.cems.stub.util.TestObjectsBuilder.buildDetective;
 import static org.junit.Assert.*;

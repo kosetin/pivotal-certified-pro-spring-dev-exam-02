@@ -44,10 +44,10 @@ import static com.apress.cems.BeanManager.asHtml;
 //@RestController
 public class CtxController {
 
-    //@Autowired
+//    @Autowired
     ApplicationContext ctx;
 
-    //@GetMapping("/")
+//    @GetMapping("/")
     public String index() {
         return asHtml.apply(ctx);
     }

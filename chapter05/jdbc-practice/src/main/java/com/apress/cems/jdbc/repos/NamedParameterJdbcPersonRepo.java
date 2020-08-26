@@ -42,7 +42,6 @@ import java.util.*;
  * @since 1.0
  */
 @Repository("jdbcNamedPersonRepo")
-// TODO 28. Some of the methods have incomplete bodies that need to be completed with appropriate NamedParameterJdbcTemplate instance calls.
 public class NamedParameterJdbcPersonRepo implements PersonRepo {
 
     private RowMapper<Person> rowMapper = new PersonRowMapper();
@@ -57,7 +56,7 @@ public class NamedParameterJdbcPersonRepo implements PersonRepo {
     public Optional<Person> findById(Long entityId) {
         String sql = "select ID, USERNAME, FIRSTNAME, LASTNAME, PASSWORD, HIRINGDATE from PERSON where ID= :id";
         // add NamedParameterJdbcTemplate instance call to find a person
-        return Optional.empty();
+        return Optional.ofNullable(jdbcNamedTemplate.queryForObject(sql, Map.of("id", entityId), rowMapper));
     }
 
     @Override
@@ -82,6 +81,8 @@ public class NamedParameterJdbcPersonRepo implements PersonRepo {
     @Override
     public int updatePassword(Long personId, String newPass) {
         // add NamedParameterJdbcTemplate instance call to update the password for a person with ID= personId
+        jdbcNamedTemplate.update("update PERSON set password=:password where ID=:id",
+                Map.of("id", personId, "password", newPass));
         return 0;
     }
 
@@ -141,5 +142,6 @@ public class NamedParameterJdbcPersonRepo implements PersonRepo {
     @Override
     public int deleteById(Long entityId) {
         // add NamedParameterJdbcTemplate instance call to delete a person
+        jdbcNamedTemplate.update("delete from PERSON where id = :id", Map.of("id", entityId));
         return 0;    }
 }

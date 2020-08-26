@@ -30,7 +30,13 @@ package com.apress.cems.spring;
 import com.apress.cems.jupiter.cfg.TestDbConfig;
 import com.apress.cems.repos.PersonRepo;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import repos.ReposConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,18 +45,18 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Iuliana Cosmina
  * @since 1.0
  */
-// TODO 18. Complete the test class definition in order for all the test to pass.
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {TestDbConfig.class, ReposConfig.class})
 public class PersonRepoTest {
     public static final Long PERSON_ID = 1L;
-
+    @Autowired
     PersonRepo personRepo;
-
+    @BeforeEach
     public void setUp(){
         assertNotNull(personRepo);
     }
 
-
+    @Test
     public void testFindByIdPositive(){
         personRepo.findById(PERSON_ID).ifPresentOrElse(
                 p -> assertEquals("Sherlock", p.getFirstName()),
@@ -58,7 +64,7 @@ public class PersonRepoTest {
         );
 
     }
-
+    @Test
     public void testFindAll(){
         var personSet = personRepo.findAll();
         assertNotNull(personSet);

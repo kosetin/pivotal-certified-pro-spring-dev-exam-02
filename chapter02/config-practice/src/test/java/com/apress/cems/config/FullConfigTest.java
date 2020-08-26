@@ -42,7 +42,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Iuliana Cosmina
  * @since 1.0
  */
-// TODO 11. Modify this test class to use more than one configuration class
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {FullConfig.class})
 public class FullConfigTest {
