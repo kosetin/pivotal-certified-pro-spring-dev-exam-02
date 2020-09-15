@@ -34,6 +34,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -71,7 +72,9 @@ public class HibernateRepo implements PersonRepo {
     @Override
     public List<Person> findAllByLastName(String lastName) {
         // TODO 35. Add Hibernate query to extract all persons with lastName = :lastName
-        return  List.of();
+        return session().createQuery("FROM Person p where p.lastName = :ln")
+                .setParameter("ln", lastName).list();
+//        return  List.of();
     }
 
     @Override
@@ -117,7 +120,7 @@ public class HibernateRepo implements PersonRepo {
 
     @Override
     public long count() {
-        return 0; // TODO 36. Add query to count all persons
+        return findAll().size();
     }
 
     @Override
@@ -139,6 +142,7 @@ public class HibernateRepo implements PersonRepo {
     @Override
     public int deleteById(Long entityId) {
         // TODO 37. Add code to delete a person by its id.
-        return 1;
+        Optional<Person> person = findById(entityId);
+        return person.map(p -> {session().delete(p); return 1;}).orElse(0);
     }
 }

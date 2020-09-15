@@ -37,6 +37,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.NoSuchElementException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -51,8 +54,18 @@ class PersonServiceTest {
     PersonService personService;
 
 
-    //@Test
+    @Test
     void testUpdatePassword() {
-        // TODO 34. Complete definition of this test in order for it to pass
+        
+        var person = personService.findById(1L).orElseThrow(NoSuchElementException::new);
+
+        String oldPassword = person.getPassword();
+
+        assertThrows(MailSendingException.class,
+                    () -> personService.updatePassword(person,"someNewPassword"));
+
+        var samePerson = personService.findById(1L).orElseThrow(NoSuchElementException::new);
+
+        assertEquals(oldPassword, samePerson.getPassword());
     }
 }

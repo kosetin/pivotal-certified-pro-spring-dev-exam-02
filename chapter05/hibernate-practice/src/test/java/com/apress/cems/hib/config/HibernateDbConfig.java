@@ -105,6 +105,18 @@ public class HibernateDbConfig {
     }
 
     // TODO 38. Add a session factory and a transaction manager bean declaration
+    @Bean
+    public SessionFactory sessionFactory() {
+        return new LocalSessionFactoryBuilder(dataSource())
+                .scanPackages("com.apress.cems.dao")
+                .addProperties(hibernateProperties())
+                .buildSessionFactory();
+    }
+
+    @Bean
+    public PlatformTransactionManager txManager() {
+        return new HibernateTransactionManager(sessionFactory());
+    }
 
     //needed because Hibernate does not drop the database as it should
     @PostConstruct
@@ -114,8 +126,8 @@ public class HibernateDbConfig {
         int end = url.indexOf(";", start);
         String dbName = url.substring(start, end);
         File one  = new File(currentDir.concat(File.separator).concat(dbName).concat(".mv.db"));
-        one.deleteOnExit();
+        one.delete();
         File two  = new File(currentDir.concat(File.separator).concat(dbName).concat(".trace.db"));
-        two.deleteOnExit();
+        two.delete();
     }
 }

@@ -52,7 +52,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {JpaDbConfig.class, AppConfig.class})
 @Transactional
-@Disabled
 class JpaPersonRepoTest {
 
     @Autowired

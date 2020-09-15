@@ -29,27 +29,24 @@ package com.apress.cems.emf.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.hibernate.SessionFactory;
+import net.sf.ehcache.transaction.local.JtaLocalTransactionStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
-import org.springframework.orm.hibernate5.HibernateTemplate;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.persistenceunit.PersistenceUnitManager;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.jta.JtaTransactionManager;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import javax.transaction.TransactionManager;
 import java.io.File;
 import java.util.Properties;
 
@@ -111,7 +108,21 @@ public class JpaDbConfig {
         }
     }
 
-    // TODO 39. Declare and configure the entity manager factory and the transaction manager beans.
+    @Bean
+    public EntityManagerFactory entityManager() {
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setPackagesToScan("com.apress.cems.dao");
+        factory.setDataSource(dataSource());
+        factory.setJpaProperties(hibernateProperties());
+        factory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        factory.afterPropertiesSet();
+        return factory.getNativeEntityManagerFactory();
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        return new JpaTransactionManager(entityManager());
+    }
 
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
@@ -131,9 +142,9 @@ public class JpaDbConfig {
         int end = url.indexOf(";", start);
         String dbName = url.substring(start, end);
         File one  = new File(currentDir.concat(File.separator).concat(dbName).concat(".mv.db"));
-        one.deleteOnExit();
+        one.delete();
         File two  = new File(currentDir.concat(File.separator).concat(dbName).concat(".trace.db"));
-        two.deleteOnExit();
+        two.delete();
     }
 
 }

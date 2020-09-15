@@ -54,7 +54,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {HibernateDbConfig.class, AppConfig.class})
 @Transactional
-@Disabled
 class HibernateRepoTest {
 
     @Autowired
