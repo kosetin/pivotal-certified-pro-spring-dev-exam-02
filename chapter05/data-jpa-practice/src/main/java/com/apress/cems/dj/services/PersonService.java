@@ -53,6 +53,8 @@ public interface PersonService {
 
     Optional<Person> findByCompleteName(String firstName, String lastName);
 
+    Optional<Person> findByCompleteNameAlt(String firstName, String lastName);
+
     String getPersonAsHtml(String username);
 
     //Person updatePassword(Person person, String password)throws MailSendingException;

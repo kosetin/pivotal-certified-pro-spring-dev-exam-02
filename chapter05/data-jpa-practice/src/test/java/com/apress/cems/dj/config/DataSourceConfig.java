@@ -142,8 +142,8 @@ public class DataSourceConfig {
         int end = url.indexOf(";", start);
         String dbName = url.substring(start, end);
         File one  = new File(currentDir.concat(File.separator).concat(dbName).concat(".mv.db"));
-        one.deleteOnExit();
+        one.delete();
         File two  = new File(currentDir.concat(File.separator).concat(dbName).concat(".trace.db"));
-        two.deleteOnExit();
+        two.delete();
     }
 }

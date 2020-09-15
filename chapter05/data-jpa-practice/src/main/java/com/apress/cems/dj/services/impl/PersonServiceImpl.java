@@ -101,6 +101,11 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public Optional<Person> findByCompleteNameAlt(String firstName, String lastName) {
+        return personRepo.findByFirstNameAndLastName(firstName, lastName);
+    }
+
+    @Override
     public void delete(Person person) {
         personRepo.delete(person);
     }

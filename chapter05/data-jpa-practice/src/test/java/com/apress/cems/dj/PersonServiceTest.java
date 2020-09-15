@@ -36,6 +36,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,7 +48,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {DataSourceConfig.class, AppConfig.class})
-@Disabled
+@Transactional
  class PersonServiceTest {
 
     @Autowired
@@ -64,6 +65,13 @@ import static org.junit.jupiter.api.Assertions.fail;
     @Test
     void testfindByCompleteName() {
         personService.findByCompleteName("Sherlock", "Holmes").ifPresent(person ->
+                assertEquals("sherlock.holmes", person.getUsername())
+        );
+    }
+
+    @Test
+    void testfindByCompleteNameAlt() {
+        personService.findByCompleteNameAlt("Sherlock", "Holmes").ifPresent(person ->
                 assertEquals("sherlock.holmes", person.getUsername())
         );
     }

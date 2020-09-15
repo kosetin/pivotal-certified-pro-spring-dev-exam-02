@@ -29,6 +29,7 @@ package com.apress.cems.dj.repos;
 
 import com.apress.cems.dao.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
@@ -41,5 +42,9 @@ import java.util.Optional;
 public interface PersonRepo extends JpaRepository<Person, Long> {
 
     Optional<Person> findByUsername(String username);
+
+    @Query("select p from Person p where p.firstName = ?1 and p.lastName = ?2")
     Optional<Person> findByCompleteName(String firstName, String lastName);
+
+    Optional<Person> findByFirstNameAndLastName(String firstName, String lastName);
 }
