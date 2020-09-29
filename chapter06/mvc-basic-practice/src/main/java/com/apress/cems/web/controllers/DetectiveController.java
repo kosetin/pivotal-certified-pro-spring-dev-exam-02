@@ -27,15 +27,31 @@ SOFTWARE.
 */
 package com.apress.cems.web.controllers;
 
+import com.apress.cems.dao.Detective;
+import com.apress.cems.dao.Person;
 import com.apress.cems.dj.services.DetectiveService;
+import com.apress.cems.dj.services.wrappers.DetectiveWrapper;
+import com.apress.cems.web.problem.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+import java.util.Optional;
+
+import static com.apress.cems.util.Functions.COMPARATOR_BY_ID;
 
 /**
  * @author Iuliana Cosmina
  * @since 1.0
  */
 // TODO 48. complete the configuration and implementation of this class so that the Detectives part of the application works too.
+@Controller
+@RequestMapping(path = "/detectives")
 public class DetectiveController {
 
     private Logger logger = LoggerFactory.getLogger(DetectiveController.class);
@@ -46,4 +62,26 @@ public class DetectiveController {
         this.detectiveService = detectiveService;
     }
 
+    @GetMapping("/list")
+    public String list(Model model) {
+        logger.info("Populating model with list...");
+        List<Detective> detectives =  detectiveService.findAll();
+        detectives.sort(COMPARATOR_BY_ID);
+        model.addAttribute("detectives", detectives);
+        return "detectives/list";
+    }
+
+    /**
+     * Handles requests to show detail about one person.
+     */
+    @GetMapping("/show")
+    public String show(@RequestParam("id") Long id, Model model) throws NotFoundException {
+        DetectiveWrapper personOpt = detectiveService.findById(id);
+        if(!personOpt.isEmpty()) {
+            model.addAttribute("detective", personOpt);
+        } else {
+            throw new NotFoundException(Detective.class, id);
+        }
+        return "detectives/show";
+    }
 }

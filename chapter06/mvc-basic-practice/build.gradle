@@ -16,7 +16,7 @@ dependencies {
 }
 
 war {
-    archiveBaseName = 'mvc-basic-practice'
+    archiveFileName = 'mvc-basic-practice.war'
 
     manifest {
         attributes(

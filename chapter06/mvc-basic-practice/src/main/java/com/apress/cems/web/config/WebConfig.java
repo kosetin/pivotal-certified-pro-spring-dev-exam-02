@@ -48,15 +48,16 @@ import java.util.Locale;
  * @author Iuliana Cosmina
  * @since 1.0
  */
-// TODO 43. Add the proper annotation to enable Spring @MVC
+@EnableWebMvc
 @ComponentScan(basePackages = {"com.apress.cems.web.controllers"})
 class WebConfig implements WebMvcConfigurer {
 
     @Bean
     ViewResolver viewResolver(){
-        InternalResourceViewResolver resolver = null;
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         // TODO 44. Complete the definition for a bean of type InternalResourceViewResolver that will map the requests to views
-        // under '/WEB-INF/' with extension '.jsp'
+        resolver.setPrefix("/WEB-INF/");
+        resolver.setSuffix(".jsp");
         return resolver;
     }
 
